@@ -3,7 +3,9 @@
 import asciiPanel.AsciiFont;
 import asciiPanel.AsciiPanel;
 import com.anish.mycreatures.World;
-import com.anish.fivescreens.FightScreen;
+import com.anish.screen.FightScreen;
+import com.anish.screen.Screen;
+import com.anish.screen.TestScreen;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -13,7 +15,7 @@ public class Main extends JFrame implements KeyListener,Runnable
 {
 
     private AsciiPanel terminal;
-    private FightScreen.Screen screen;
+    private Screen screen;
 
     public Main()
     {
@@ -22,9 +24,9 @@ public class Main extends JFrame implements KeyListener,Runnable
         add(terminal);
         pack();
         screen = new FightScreen();
+        new Thread((FightScreen)screen).start();
         addKeyListener(this);
         repaint();
-
     }
 
     @Override
@@ -46,7 +48,6 @@ public class Main extends JFrame implements KeyListener,Runnable
     {
         screen = screen.respondToUserInput(e);
         repaint();
-
     }
 
     @Override
@@ -60,23 +61,24 @@ public class Main extends JFrame implements KeyListener,Runnable
         Main app = new Main();
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         app.setVisible(true);
-        app.run();
+        new Thread(app).start();
     }
+
 
     @Override
     public void run()
     {
         while(true)
         {
+            repaint();
             try
             {
-                Thread.sleep(100);
+                Thread.sleep(500);
             }
             catch (InterruptedException e)
             {
                 e.printStackTrace();
             }
-            repaint();
         }
     }
 }

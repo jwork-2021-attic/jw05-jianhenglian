@@ -2,7 +2,7 @@ package com.anish.mycreatures;
 
 public class World {
 
-    public static final int WIDTH = 50;
+    public static final int WIDTH = 70;
     public static final int HEIGHT = 50;
 
     private Tile<Thing>[][] tiles;
@@ -25,7 +25,7 @@ public class World {
         return this.tiles[x][y].getThing();
     }
 
-    public void put(Thing t, int x, int y) {
+    public synchronized void put(Thing t, int x, int y) {
         this.tiles[x][y].setThing(t);
     }
 
